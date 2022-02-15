@@ -1,0 +1,17 @@
+prime,target,trialType
+class,type,RealRelated
+father,mother,RealRelated
+income,tax,RealRelated
+sunny,outside,RealRelated
+wanted,needed,NonwordRelated
+contraction,taht's,NonwordRelated
+surround,ecnter,NonwordRelated
+hundred,cetnury,NonwordRelated
+capable,else,RealUnrelated
+glass,live,RealUnrelated
+system,received,RealUnrelated
+talks,committee,RealUnrelated
+south,feeilng,NonwordUnrelated
+depart,pya,NonwordUnrelated
+close,erligious,NonwordUnrelated
+teach,amonut,NonwordUnrelated
