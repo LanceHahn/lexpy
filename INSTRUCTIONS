@@ -50,17 +50,15 @@ SwedishEnd
 
 English
 instructionsSTART
-Your task is to as accurately and quickly as possible to determine the color of a presented word.
-You get two options, one on each side of the colored word.
-Use the X button if the right option is the left, and the M-key if right option is to the right.
+You will see one word followed by a second word will sometimes will not be a word.
+Accurately and quickly determine if the second word is a REAL.
+Press the Z-key if it is a real word and the M-key if it is not a word.
 
-
-
-In the example below, you would then press the X (left), as the word is presented in the color green.
+If you saw GREEN followed by UBLE, you would press M (Non-word) because the second word is not real.
 instructionsEND
 
 practiceSTART
-Press SPACE to test six trials before the start of the actual test.
+Press SPACE to experience 16 practice trials before the start of the actual experiment.
 practiceEND
 
 testSTART
@@ -71,6 +69,7 @@ If you have any questions, please ask experimenter leader now.
 
 
 Try to answer as quickly and accurately as possible.
+You will not be told whether you were correct or not in these trials.
 
 
 Press the SPACE to start the experiment.
@@ -92,7 +91,7 @@ Correct!
 rightEND
 
 incorrectSTART
-Incorrect! It is the color not the word
+Incorrect! The second word is not a REAL word
 incorrectEND
 
 EnglishEnd

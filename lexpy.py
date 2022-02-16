@@ -5,7 +5,9 @@ from fileHandling import *
 
 class Experiment:
     def __init__(self, win_color, txt_color):
-        self.stimuli_positions = [[-.2, 0], [.2, 0], [0, 0]]
+        self.prime_position = [0, .1]
+        self.target_position = [0, -.1]
+        self.fix_position = [0, 0]
         self.win_color = win_color
         self.txt_color = txt_color
         self.window = None
@@ -36,7 +38,8 @@ class Experiment:
             core.quit()
             return 'Cancelled'
 
-    def create_text_stimuli(self, text=None, pos=[0.0, 0.0], name='', color=None):
+    def create_text_stimuli(self, text=None, pos=[0.0, 0.0], name='',
+                            color=None):
         '''Creates a text stimulus,
         '''
         if color is None:
@@ -47,16 +50,14 @@ class Experiment:
                                        color=color, colorSpace=u'rgb')
         return text_stimuli
 
-    def create_trials(self, trial_file, randomization='random'):
+    def create_trials(self, trial_file):
         '''Doc string'''
-        #data_types = ['Response', 'Accuracy', 'RT', 'Sub_id', 'Sex']
         data_types = ['Response', 'RT', 'Sub_id', 'Gender', 'TrialType']
         with open(trial_file, 'r') as stimfile:
             _stims = csv.DictReader(stimfile)
             trials = data.TrialHandler(list(_stims), 1,
                                        method="random")
         [trials.data.addDataType(data_type) for data_type in data_types]
-
         return trials
 
     def present_stimuli(self, color, text, position, stim):
@@ -74,7 +75,8 @@ class Experiment:
 
         for trial in _trials:
             # Fixation cross
-            fixation = self.present_stimuli(self.txt_color, '+', self.stimuli_positions[2],
+            fixation = self.present_stimuli(self.txt_color, '+',
+                                            self.fix_position,
                                             stimuli[3])
             fixation.draw()
             self.window.flip()
@@ -83,7 +85,7 @@ class Experiment:
 
             # Prime word
             prime = self.present_stimuli(self.txt_color, trial['prime'],
-                                          self.stimuli_positions[0], stimuli[0])
+                                          self.prime_position, stimuli[0])
             prime.draw()
             self.window.flip()
             core.wait(.6)
@@ -91,13 +93,14 @@ class Experiment:
 
             # target
             target = self.present_stimuli(self.txt_color, trial['target'],
-                                          self.stimuli_positions[1], stimuli[1])
+                                          self.target_position, stimuli[1])
             target.draw()
             self.window.flip()
 
             keys = event.waitKeys(keyList=['z', 'm', 'q'])
             resp_time = timer.getTime()
             interpetKey = "Nonword" if keys[0] == self.nonword_key else "Real"
+
             if testtype == 'practice':
                 if interpetKey in trial['trialType']:
                     instruction_stimuli['right'].draw()
@@ -118,7 +121,10 @@ class Experiment:
                 trial['Sub_id'] = settings['Subid']
                 trial['Gender'] = settings['Gender']
                 write_csv(settings[u'DataFile'], trial)
-
+            print(f"{trial['prime']},{trial['target']},"
+                  f"{keys},{interpetKey}"
+                  f",{interpetKey in trial['trialType']} "
+                  f",{resp_time}")
             event.clearEvents()
             if 'q' in keys:
                 print(f"breaking because keys: {keys}")
@@ -160,21 +166,15 @@ def display_instructions(start_instruction='', window=None):
         instruction_stimuli['instructions'].pos = (0.0, 0.5)
         instruction_stimuli['instructions'].draw()
 
-        positions = [[-.2, 0], [.2, 0], [0, 0]]
+        positions = [[0, .1], [0, -.1]]
         examples = [experiment.create_text_stimuli() for pos in positions]
-        example_words = ['green', 'blue', 'green']
-        if settings['Language'] == 'Swedish':
-            example_words = [swedish_task(word) for word in example_words]
-
+        example_words = ['green', 'uble']
         for i, pos in enumerate(positions):
             examples[i].pos = pos
             if i == 0:
                 examples[0].setText(example_words[i])
             elif i == 1:
                 examples[1].setText(example_words[i])
-            elif i == 2:
-                examples[2].setColor('Green')
-                examples[2].setText(example_words[i])
 
         [example.draw() for example in examples]
 
