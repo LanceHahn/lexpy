@@ -90,6 +90,10 @@ rightSTART
 Correct!
 rightEND
 
+incorrectnonwordSTART
+Incorrect! The second word IS a REAL word
+incorrectnonwordEND
+
 incorrectSTART
 Incorrect! The second word is not a REAL word
 incorrectEND

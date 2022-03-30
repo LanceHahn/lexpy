@@ -105,7 +105,12 @@ class Experiment:
                 if interpetKey in trial['trialType']:
                     instruction_stimuli['right'].draw()
                 else:
-                    instruction_stimuli['incorrect'].draw()
+                    if interpetKey == "Nonword":
+                        for k in instruction_stimuli.keys():
+                            print(f"{k}: {instruction_stimuli[k]}")
+                        instruction_stimuli['incorrectnonword'].draw()
+                    else:
+                        instruction_stimuli['incorrect'].draw()
 
                 self.window.flip()
                 core.wait(2)
